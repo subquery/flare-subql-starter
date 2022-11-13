@@ -10,7 +10,7 @@ runner:
     name: "@subql/query"
     version: "*"
 description: "This project can be use as a starting point for developing your new Flare SubQuery project"
-repository: "https://github.com/subquery/ethereum-subql-starter"
+repository: "https://github.com/subquery/flare-subql-starter"
 
 schema:
   file: "./schema.graphql"
