@@ -1,6 +1,6 @@
 specVersion: "1.0.0"
 
-name: "ethereum-subql-starter"
+name: "flare-subql-starter"
 version: "0.0.1"
 runner:
   node:
@@ -9,40 +9,39 @@ runner:
   query:
     name: "@subql/query"
     version: "*"
-description: "This project can be use as a starting point for developing your new Ethereum SubQuery project"
+description: "This project can be use as a starting point for developing your new Flare SubQuery project"
 repository: "https://github.com/subquery/ethereum-subql-starter"
 
 schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: https://mainnet.infura.io/v3/c3772903689441d290c68698bb022ba6
-  chainId: "1"
+  endpoint: https://flare-api.flare.network/ext/C/rpc
+  chainId: "14"
 
 dataSources:
-  - kind: ethereum/Runtime
-    startBlock: 15695385
+  - kind: flare/Runtime
+    startBlock: 2300000
     options:
       # Must be a key of assets
-      abi: erc20
-      address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      abi: priceSubmitter
+      address: "0x1000000000000000000000000000000000000003"
     assets:
-      erc20:
-        file: "erc20.abi.json"
+      priceSubmitter:
+        file: "priceSubmitter.abi.json"
     mapping:
       file: "./dist/index.js"
       handlers:
         - handler: handleTransaction
-          kind: ethereum/TransactionHandler
+          kind: flare/TransactionHandler
           filter:
             ## The function can either be the function fragment or signature
             # function: '0x095ea7b3'
             # function: '0x7ff36ab500000000000000000000000000000000000000000000000000000000'
-            function: approve(address spender, uint256 rawAmount)
+            function: submitHash(uint256 _epochId, bytes32 _hash)
         - handler: handleLog
-          kind: ethereum/LogHandler
+          kind: flare/LogHandler
           filter:
             topics:
               ## Follows standard log filters https://docs.ethers.io/v5/concepts/events/
-              - Transfer(address indexed from, address indexed to, uint256 amount)
-              # address: "0x60781C2586D68229fde47564546784ab3fACA982"
+              - HashSubmitted(address indexed submitter, uint256 indexed epochId, bytes32 hash, uint256 timestamp)

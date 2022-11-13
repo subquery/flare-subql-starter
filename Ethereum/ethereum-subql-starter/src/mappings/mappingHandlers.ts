@@ -3,27 +3,29 @@
 import { EthereumTransaction, EthereumLog } from "@subql/types-ethereum";
 import { BigNumber } from "@ethersproject/bignumber";
 
-import { Approval, Transaction } from "../types";
+import { HashSubmittedEvent, SubmitHash } from "../types";
 
 // Setup types from ABI
-type TransferEventArgs = [string, string, BigNumber] & {
-  from: string;
-  to: string;
-  value: BigNumber;
+type HashSubmittedEventArgs = [string, BigNumber, string, BigNumber] & {
+  submitter: string;
+  epochId: BigNumber;
+  hash: string;
+  timestamp: BigNumber
 };
-type ApproveCallArgs = [string, BigNumber] & {
-  _spender: string;
-  _value: BigNumber;
+type SubmitHashCallArgs = [BigNumber, string] & {
+  epochId: BigNumber;
+  hash: string;
 };
 
 export async function handleLog(
-  event: EthereumLog<TransferEventArgs>
+  event: EthereumLog<HashSubmittedEventArgs>
 ): Promise<void> {
-  const transaction = Transaction.create({
+  const transaction = HashSubmittedEvent.create({
     id: event.transactionHash,
-    value: event.args.value.toBigInt(),
-    from: event.args.from,
-    to: event.args.to,
+    submitter: event.args.submitter,
+    epochId: event.args.epochId.toBigInt(),
+    hash: event.args.hash,
+    timestamp: event.args.timestamp.toBigInt(),
     contractAddress: event.address,
   });
 
@@ -31,13 +33,12 @@ export async function handleLog(
 }
 
 export async function handleTransaction(
-  event: EthereumTransaction<ApproveCallArgs>
+  event: EthereumTransaction<SubmitHashCallArgs>
 ): Promise<void> {
-  const approval = Approval.create({
+  const approval = SubmitHash.create({
     id: event.hash,
-    owner: event.from,
-    value: event.args._value.toBigInt(),
-    spender: event.args._spender,
+    epochId: JSON.parse(event.args[0].toString()),
+    hash: event.args[1],
     contractAddress: event.to,
   });
 
