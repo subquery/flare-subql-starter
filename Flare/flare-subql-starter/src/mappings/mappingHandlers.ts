@@ -1,6 +1,6 @@
 // Copyright 2020-2022 OnFinality Limited authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import { EthereumTransaction, EthereumLog } from "@subql/types-ethereum";
+import { FlareTransaction, FlareLog } from "@subql/types-flare";
 import { BigNumber } from "@ethersproject/bignumber";
 
 import { HashSubmittedEvent, SubmitHash } from "../types";
@@ -18,7 +18,7 @@ type SubmitHashCallArgs = [BigNumber, string] & {
 };
 
 export async function handleLog(
-  event: EthereumLog<HashSubmittedEventArgs>
+  event: FlareLog<HashSubmittedEventArgs>
 ): Promise<void> {
   const transaction = HashSubmittedEvent.create({
     id: event.transactionHash,
@@ -33,7 +33,7 @@ export async function handleLog(
 }
 
 export async function handleTransaction(
-  event: EthereumTransaction<SubmitHashCallArgs>
+  event: FlareTransaction<SubmitHashCallArgs>
 ): Promise<void> {
   const approval = SubmitHash.create({
     id: event.hash,
