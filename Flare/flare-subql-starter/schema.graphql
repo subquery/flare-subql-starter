@@ -14,8 +14,6 @@ type HashSubmittedEvent @entity {
 type SubmitHash @entity {
   id: ID! # Transaction hash
   epochId: BigInt!
-
   hash: String!
-
   contractAddress: String!
 }

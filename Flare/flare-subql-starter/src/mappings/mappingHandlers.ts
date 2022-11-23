@@ -1,8 +1,5 @@
-// Copyright 2020-2022 OnFinality Limited authors & contributors
-// SPDX-License-Identifier: Apache-2.0
-import { FlareTransaction, FlareLog } from "@subql/types-flare";
+import { FlareTransaction, FlareLog, FlareBlock } from "@subql/types-flare";
 import { BigNumber } from "@ethersproject/bignumber";
-
 import { HashSubmittedEvent, SubmitHash } from "../types";
 
 // Setup types from ABI
@@ -10,12 +7,19 @@ type HashSubmittedEventArgs = [string, BigNumber, string, BigNumber] & {
   submitter: string;
   epochId: BigNumber;
   hash: string;
-  timestamp: BigNumber
+  timestamp: BigNumber;
 };
+
 type SubmitHashCallArgs = [BigNumber, string] & {
   epochId: BigNumber;
   hash: string;
 };
+
+/*
+export async function handleBlock(block: FlareBlock): Promise<void> {
+  // do something with each and every block
+}
+*/
 
 export async function handleLog(
   event: FlareLog<HashSubmittedEventArgs>
