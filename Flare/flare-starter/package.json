@@ -1,5 +1,5 @@
 {
-  "name": "flare-subql-starter",
+  "name": "flare-starter",
   "version": "0.0.1",
   "description": "This project can be use as a starting point for developing your new Flare SubQuery project",
   "main": "dist/index.js",
@@ -11,8 +11,8 @@
     "prepack": "rm -rf dist && npm run build",
     "test": "jest"
   },
-  "homepage": "https://github.com/subquery/flare-subql-starter",
-  "repository": "github:subquery/flare-subql-starter",
+  "homepage": "https://github.com/subquery/flare-starter",
+  "repository": "github:subquery/flare-starter",
   "files": [
     "dist",
     "schema.graphql",
