@@ -25,7 +25,7 @@ network:
   # https://api-portal.flare.network/
   endpoint: https://songbird-api.flare.network/ext/C/rpc
   # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
-  dictionary: "https://api.subquery.network/sq/subquery/flare-songbird-dictionary"
+  # dictionary: 
 
 dataSources:
   - kind: flare/Runtime
