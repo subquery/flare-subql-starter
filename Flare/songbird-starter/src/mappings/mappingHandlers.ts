@@ -1,6 +1,7 @@
 import { FlareTransaction, FlareLog, FlareBlock } from "@subql/types-flare";
 import { BigNumber } from "@ethersproject/bignumber";
 import { HashSubmittedEvent, SubmitHash } from "../types";
+import assert from "assert";
 
 // Setup types from ABI
 type HashSubmittedEventArgs = [string, BigNumber, string, BigNumber] & {
@@ -24,6 +25,8 @@ export async function handleBlock(block: FlareBlock): Promise<void> {
 export async function handleLog(
   log: FlareLog<HashSubmittedEventArgs>
 ): Promise<void> {
+  assert(log.args, "No log.args" )
+
   const transaction = HashSubmittedEvent.create({
     id: log.transactionHash,
     submitter: log.args.submitter,
@@ -39,6 +42,9 @@ export async function handleLog(
 export async function handleTransaction(
   transaction: FlareTransaction<SubmitHashCallArgs>
 ): Promise<void> {
+
+  assert(transaction.args, "No transaction.args" )
+
   const approval = SubmitHash.create({
     id: transaction.hash,
     epochId: JSON.parse(transaction.args[0].toString()),
