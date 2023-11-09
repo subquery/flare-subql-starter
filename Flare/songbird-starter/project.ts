@@ -40,7 +40,6 @@ const project: EthereumProject = {
         endpoint: [
             'https://songbird-api.flare.network/ext/C/rpc'
         ],
-        dictionary: "https://api.subquery.network/sq/subquery/flare-dictionary",
     },
     dataSources: [
         {
