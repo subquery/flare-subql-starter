@@ -40,7 +40,7 @@ const project: EthereumProject = {
         endpoint: [
             'https://flare-api.flare.network/ext/C/rpc'
         ],
-        dictionary: "https://api.subquery.network/sq/subquery/flare-dictionary",
+        dictionary: "https://dict-tyk.subquery.network/query/flare-mainnet",
     },
     dataSources: [
         {
